@@ -12,16 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('produits', function (Blueprint $table) {
-            $table->id()->auto_increment();
+            $table->id(); // auto_increment déjà géré par PostgreSQL via bigserial
             $table->string('nom');
-            $table->string('description');
-            $table->string('prix');
-            $table->string('stock');
+            $table->text('description'); // description souvent plus longue que 255 caractères
+            $table->decimal('prix', 10, 2); // prix en format numérique
+            $table->integer('stock'); // stock en entier
             $table->string('image');
-            $table->unsignedBigInteger('categorie_id');
-             $table->unsignedBigInteger('user_id');
-            $table->foreign('categorie_id')->references('id')->on('categories');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreignId('categorie_id')->constrained('categories')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id()->auto_increment();
+            $table->id(); // PostgreSQL gère l'auto-increment
             $table->string('name');
-            $table->string('email')->unique(191);
+            $table->string('email')->unique(); // pas de (191) pour PostgreSQL
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('role');
             $table->string('telephone')->nullable();
-            $table->string('salaire_base')->default(0)->nullable();
-            $table->string('avance_salaire')->default(0)->nullable();
+            $table->decimal('salaire_base', 10, 2)->default(0)->nullable(); // adapté pour valeurs numériques
+            $table->decimal('avance_salaire', 10, 2)->default(0)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -46,8 +46,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('users');
     }
 };

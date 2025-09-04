@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -12,14 +13,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('commandes', function (Blueprint $table) {
-            $table->id()->auto_increment();
-            $table->enum('statut',['livré','en attente','annulé'])->default('en attente');
-            $table->date('date_cmd')->default(now());
-            $table->double('total_prix');
-            $table->unsignedBigInteger('client_id');
-           
-            $table->foreign('client_id')->references('id')->on('clients');
-           
+            $table->id();
+            $table->string('statut')->default('en attente'); // enum remplacé par string
+            $table->date('date_cmd')->default(DB::raw('CURRENT_DATE'));
+            $table->decimal('total_prix', 10, 2);
+            $table->foreignId('client_id')->constrained('clients')->onDelete('cascade');
             $table->timestamps();
         });
     }

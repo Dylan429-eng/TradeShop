@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -12,17 +13,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transaction_paiements', function (Blueprint $table) {
-            $table->id()->auto_increment();
+            $table->id();
             $table->string('type_transaction');
             $table->string('mode_paiement', 50)->nullable();
-            $table->enum('statut',['succesful','pending','failed'])->default('pending');
-            $table->date('date_transaction')->default(now());
-            $table->decimal('montant_transaction')->default(0);
+            $table->string('statut')->default('pending'); // enum remplacé par string
+            $table->date('date_transaction')->default(DB::raw('CURRENT_DATE'));
+            $table->decimal('montant_transaction', 10, 2)->default(0);
 
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('client_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('client_id')->references('id')->on('clients');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('client_id')->nullable()->constrained('clients')->onDelete('set null');
             $table->timestamps();
         });
     }

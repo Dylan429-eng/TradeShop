@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->id()->auto_increment();
+            $table->id(); // PostgreSQL gère déjà l'auto-increment
             $table->string('type');
             $table->timestamps();
         });

@@ -12,16 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('clients', function (Blueprint $table) {
-            $table->id()->auto_increment();
+            $table->id(); // PostgreSQL gère déjà l'auto-increment
             $table->string('name');
-            $table->string('email')->unique(191);
-           
+            $table->string('email')->unique(); // pas besoin de (191)
             $table->string('password');
-            
             $table->string('telephone')->nullable();
             $table->string('lieu');
-            $table->string('solde_user')->default(0)->nullable();
-           
+            $table->decimal('solde_user', 10, 2)->default(0); // adapté pour stocker un solde numérique
             $table->timestamps();
         });
     }
