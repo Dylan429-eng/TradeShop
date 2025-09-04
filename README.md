@@ -1,56 +1,56 @@
-# TradeShop - Application E-commerce Laravel
+# TradeShop -  E-commerce Application
 
-Bienvenue sur le dépôt de TradeShop, une application e-commerce complète développée avec Laravel 12.  
-Ce projet propose une gestion avancée des produits, commandes, clients, employés, livreurs et statistiques, avec une interface moderne et responsive.
+Welcome to the TradeShop repository, a complete e-commerce application built with Laravel 12.  
+This project offers advanced management of products, orders, clients, employees, delivery agents, and statistics, with a modern and responsive interface.
 
-## Fonctionnalités principales
+## Main Features
 
-- **Gestion des produits** : Ajout, modification, suppression, catégories.
-- **Gestion des commandes** : Suivi, assignation à livreur, retrait, historique.
-- **Gestion des clients** : Visualisation, statistiques, historique de commandes.
-- **Gestion des employés** : Visualisation, suppression, rôles (admin, vendeur, livreur).
-- **Gestion des livreurs** : Dashboard dédié, suivi des livraisons, commandes assignées.
-- **Statistiques avancées** : Produits les plus/moins vendus, filtres par période, graphiques Chart.js.
-- **Notifications** : Envoi d’email Gmail au livreur lors de l’assignation d’une commande.
-- **Sécurité** : Authentification, vérification email, middlewares par rôle.
-- **Responsive design** : Interface adaptée desktop et mobile.
+- **Product Management**: Add, edit, delete, categorize products.
+- **Order Management**: Track orders, assign to delivery agents, withdrawals, history.
+- **Client Management**: View clients, statistics, order history.
+- **Employee Management**: View, delete, manage roles (admin, seller, delivery agent).
+- **Delivery Agent Management**: Dedicated dashboard, delivery tracking, assigned orders.
+- **Advanced Statistics**: Best/worst selling products, period filters, Chart.js graphs.
+- **Notifications**: Instant Gmail email sent to delivery agent when an order is assigned.
+- **Security**: Authentication, email verification, role-based middlewares.
+- **Responsive Design**: Interface adapts to desktop and mobile.
 
 ## Installation
 
-1. **Cloner le dépôt**
+1. **Clone the repository**
    ```bash
-   git clone https://github.com/votre-utilisateur/tradeshop.git
+   git clone https://github.com/your-username/tradeshop.git
    cd tradeshop
    ```
 
-2. **Installer les dépendances**
+2. **Install dependencies**
    ```bash
    composer install
    npm install && npm run build
    ```
 
-3. **Configurer l’environnement**
-   - Copier `.env.example` en `.env`
-   - Renseigner vos accès DB et Gmail (pour les notifications)
+3. **Configure environment**
+   - Copy `.env.example` to `.env`
+   - Set your DB and Gmail credentials (for notifications)
 
-4. **Générer la clé d’application**
+4. **Generate application key**
    ```bash
    php artisan key:generate
    ```
 
-5. **Migrer la base de données**
+5. **Run database migrations**
    ```bash
    php artisan migrate --seed
    ```
 
-6. **Lancer le serveur**
+6. **Start the server**
    ```bash
    php artisan serve
    ```
 
-## Configuration Gmail (notifications)
+## Gmail Configuration (notifications)
 
-Dans `.env` :
+In your `.env` file:
 ```
 MAIL_MAILER=smtp
 MAIL_HOST=smtp.gmail.com
@@ -62,21 +62,21 @@ MAIL_FROM_ADDRESS=your_gmail@gmail.com
 MAIL_FROM_NAME="TradeShop"
 ```
 
-## Structure des rôles
+## Role Structure
 
-- **Admin** : Accès complet à la gestion et aux statistiques.
-- **Livreur** : Dashboard personnel, accès aux commandes assignées.
-- **Vendeur/Employé** : Gestion des produits et commandes selon le rôle.
+- **Admin**: Full access to management and statistics.
+- **Delivery Agent**: Personal dashboard, access to assigned orders.
+- **Seller/Employee**: Manage products and orders according to their role.
 
 ## Contribution
 
-Les PR et suggestions sont les bienvenues !  
-Merci de respecter la structure du projet et d’ajouter des tests si possible.
+Pull requests and suggestions are welcome!  
+Please respect the project structure and add tests when possible.
 
-## Licence
+## License
 
-Ce projet est sous licence MIT.
+This project is licensed under the MIT License.
 
 ---
 
-**TradeShop** – E-commerce Laravel, complet et évolutif.
+**TradeShop** – Complete and scalable Laravel e-
