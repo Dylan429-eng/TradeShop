@@ -1,0 +1,133 @@
+
+     
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* ========== Header ========== */
+        header {
+            background: linear-gradient(to right, #2563eb, #4f46e5);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        header .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        header .nav a {
+            margin-left: 1rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        header .nav a:hover {
+            color: #e0e7ff;
+        }
+
+        /* ========== Hero Section ========== */
+        .hero {
+            text-align: center;
+            padding: 5rem 1rem;
+            background-color: #e0e7ff;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #444;
+        }
+
+        .hero a {
+            background-color: #2563eb;
+            color: white;
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .hero a:hover {
+            background-color: #1e40af;
+        }
+
+        /* ========== Features Section ========== */
+        .features {
+            background-color: #ffffff;
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        .features h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature {
+            background-color: #f1f5f9;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature img {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1rem;
+        }
+
+        .feature h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* ========== Footer ========== */
+        footer {
+            background-color: #1f2937;
+            color: #ccc;
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+    

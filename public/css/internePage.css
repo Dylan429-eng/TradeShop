@@ -1,0 +1,108 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f9fb;
+    color: #333;
+}
+
+header {
+    background-color: #0c4a6e;
+    color: #fff;
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav a {
+    margin-left: 1rem;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.hero-internal {
+    background-color: #e0f2fe;
+    padding: 3rem 1rem;
+    text-align: center;
+}
+
+ .features {
+            background-color: #ffffff;
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        .features h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+       .feature-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.feature {
+    flex: 0 0 calc(33.333% - 2rem); /* 3 par ligne avec l'espace de gap */
+    max-width: 300px;
+    background-color: #f8f8f8;
+    padding: 1rem;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+}
+
+
+        .feature img {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1rem;
+        }
+
+        .feature h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #e2e8f0;
+    margin-top: 3rem;
+}
+/* Tablette ≤ 900px */
+@media (max-width: 900px) {
+    .feature {
+        flex: 0 0 calc(50% - 2rem); /* ✅ 2 par ligne */
+    }
+    .features h3 {
+        font-size: 1.8rem;
+    }
+}
+
+/* Grand écran ≥ 1440px */
+@media (min-width: 1440px) {
+    .features h3 {
+        font-size: 2.5rem;
+    }
+    .feature h4 {
+        font-size: 1.4rem;
+    }
+}

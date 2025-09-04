@@ -1,0 +1,99 @@
+.min-h-screen {
+    min-height: 100vh;
+    background: #f8fafc;
+    padding: 2rem 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+.max-w-5xl {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+.header-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #22223b;
+    margin-bottom: 1.5rem;
+}
+.filters {
+    background: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    border: 1px solid #e5e7eb;
+    margin-bottom: 1.5rem;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.form-select {
+    padding: 0.5rem;
+    border-radius: 0.4rem;
+    border: 1px solid #cbd5e1;
+    font-size: 1rem;
+    background: #f9fafb;
+}
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+@media (max-width: 900px) {
+    .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+ul li {
+    background: #f1f5f9;
+    margin-bottom: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.4rem;
+    font-size: 1rem;
+    color: #22223b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+ul li b {
+    color: #2563eb;
+}
+.table-container {
+    width: 100%;
+    background: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    border: 1px solid #e5e7eb;
+    margin-bottom: 2rem;
+}
+.header-title[style] {
+    margin-bottom: 1rem !important;
+}
+canvas#produitsChart {
+    background: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    border: 1px solid #e5e7eb;
+    padding: 1rem;
+}
+/* Tablette (641px – 1024px) */
+@media (max-width: 1024px) {
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Grand écran (≥1440px) */
+@media (min-width: 1440px) {
+    .max-w-5xl {
+        max-width: 1200px;
+    }
+    .header-title {
+        font-size: 2.5rem;
+    }
+}
