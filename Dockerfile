@@ -32,11 +32,6 @@ RUN composer install --no-dev --optimize-autoloader
 # 7️⃣ Installer Node.js et builder les assets si nécessaire
 RUN if [ -f package.json ]; then npm install && npm run build; fi
 
-# 8️⃣ Générer la clé et mettre en cache la config
-RUN php artisan key:generate \
-    && php artisan config:cache \
-    && php artisan route:cache \
-    && php artisan view:cache
 
 # 9️⃣ Permissions pour storage et cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
@@ -45,4 +40,4 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 EXPOSE 9000
 
 # 1️⃣1️⃣ Commande pour démarrer Laravel via PHP-FPM
-CMD ["php-fpm"]
+CMD php artisan config:cache && php artisan route:cache && php artisan view:cache && php-fpm
