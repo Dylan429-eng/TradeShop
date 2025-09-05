@@ -1,43 +1,41 @@
-# -------------------------------
-# Dockerfile pour Laravel + PHP 8.2 + PostgreSQL
-# -------------------------------
-
-# 1️⃣ Base PHP avec FPM
+# Étape 1 : Image PHP avec FPM
 FROM php:8.2-fpm
 
-# 2️⃣ Installer les dépendances système
+# Installer dépendances système
 RUN apt-get update && apt-get install -y \
-    libpq-dev \
-    libzip-dev \
-    zip \
-    unzip \
-    git \
-    curl \
-    npm \
-    && docker-php-ext-install pdo pdo_pgsql pgsql zip \
-    && rm -rf /var/lib/apt/lists/*
+    libzip-dev unzip git curl nginx \
+    && docker-php-ext-install pdo pdo_mysql zip bcmath
 
-# 3️⃣ Installer Composer
+# Installer Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# 4️⃣ Définir le répertoire de travail
+# Créer le dossier de travail
 WORKDIR /var/www/html
 
-# 5️⃣ Copier le projet Laravel
+# Copier le code Laravel
 COPY . .
 
-# 6️⃣ Installer les dépendances Laravel
+# Installer dépendances PHP
 RUN composer install --no-dev --optimize-autoloader
 
-# 7️⃣ Installer Node.js et builder les assets si nécessaire
+# Construire assets frontend si package.json existe
 RUN if [ -f package.json ]; then npm install && npm run build; fi
 
+# Copier config Nginx
+COPY ./docker/nginx.conf /etc/nginx/conf.d/default.conf
 
-# 9️⃣ Permissions pour storage et cache
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# Mettre les bons droits
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache
 
-#  🔟 Exposer le port pour Render
-EXPOSE 9000
+# Générer caches Laravel
+RUN php artisan config:cache && php artisan route:cache && php artisan view:cache
 
-# 1️⃣1️⃣ Commande pour démarrer Laravel via PHP-FPM
-CMD php artisan config:cache && php artisan route:cache && php artisan view:cache && php-fpm
+# Render définit $PORT automatiquement
+ENV PORT=10000
+
+# Exposer le port
+EXPOSE 10000
+
+# Démarrer Nginx + PHP-FPM
+CMD service php8.2-fpm start && nginx -g 'daemon off;'
