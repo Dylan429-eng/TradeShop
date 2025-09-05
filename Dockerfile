@@ -44,7 +44,7 @@ RUN php artisan config:cache \
     && php artisan view:cache
 
 # Config Nginx pour Laravel
-COPY ./docker/nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY ./docker/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Exposer le port
 EXPOSE 80
