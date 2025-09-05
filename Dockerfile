@@ -31,4 +31,4 @@ RUN chown -R www-data:www-data /var/www/html \
 ENV PORT=10000
 EXPOSE 10000
 
-CMD service php8.2-fpm start && nginx -g 'daemon off;'
+CMD php-fpm -D && nginx -g "daemon off;"
