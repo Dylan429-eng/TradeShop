@@ -1,25 +1,23 @@
-// server/db.js
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
   logging: false,
-  dialectOptions: {
+  dialectOptions: process.env.PG_SSL === 'true' ? {
     ssl: {
       require: true,
-      rejectUnauthorized: false, // Render + Supabase gèrent les certificats
+      rejectUnauthorized: false,
     },
-  },
+  } : {},
   pool: {
-    max: 10,       // nombre max de connexions simultanées
+    max: 10,
     min: 0,
-    acquire: 30000, // timeout d’acquisition
-    idle: 10000,   // libère les connexions inactives
+    acquire: 30000,
+    idle: 10000,
   },
 });
 
-// Vérification connexion DB
 (async () => {
   try {
     await sequelize.authenticate();

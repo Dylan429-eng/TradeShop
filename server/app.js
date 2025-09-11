@@ -22,7 +22,7 @@ app.use(
   session({
     store: new pgSession({
       conObject: {
-        conString: process.env.DATABASE_URL,
+        connectionString: process.env.SESSION_DATABASE_URL,
         ssl: {
           require: true,
           rejectUnauthorized: false, // << clé pour Render + Supabase
@@ -30,6 +30,7 @@ app.use(
       },
       tableName: 'sessions',
       schemaName: 'public',
+      pruneSessionInterval: 60,
     }),
     secret: process.env.SESSION_SECRET,
     resave: false,
