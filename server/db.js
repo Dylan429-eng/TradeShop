@@ -1,4 +1,6 @@
 // server/db.js
+const { Sequelize } = require('sequelize'); // <- Assure-toi que c'est présent
+require('dotenv').config();
 const sequelize = new Sequelize(
   process.env.PG_DB_NAME,
   process.env.PG_USER,
