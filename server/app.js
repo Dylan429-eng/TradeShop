@@ -21,7 +21,13 @@ app.use(methodOverride('_method'));
 app.use(
   session({
     store: new pgSession({
-      conString: `postgres://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DB_NAME}?sslmode=require`,
+      conObject: {
+        connectionString: `postgres://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DB_NAME}`,
+        ssl: {
+          require: true,
+          rejectUnauthorized: false, // << clé pour Render + Supabase
+        },
+      },
     }),
     secret: process.env.SESSION_SECRET,
     resave: false,
