@@ -14,7 +14,7 @@ const newPasswordController = require('../controllers/auth/newPassword');
 const emailVerificationPromptController = require('../controllers/auth/emailVerificationPrompt');
 const verifyEmailController = require('../controllers/auth/VerifyEmail');
 const emailVerificationNotificationController = require('../controllers/auth/emailVerificationNotification');
-const confirmablePasswordController = require('../controllers/auth/confirmablePassword');
+const confirmablePasswordController = require('../controllers/auth/ConfirmablePassword');
 const passwordController = require('../controllers/auth/Password');
 
 // ==========================
