@@ -1,0 +1,27 @@
+<%- include('../layouts/guest') %>
+
+<div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+  Thanks for signing up! Please verify your email by clicking the link we just sent you.
+</div>
+
+<% if (status === 'verification-link-sent') { %>
+  <div class="mb-4 text-green-600">
+    A new verification link has been sent to your email.
+  </div>
+<% } %>
+
+<div class="flex justify-between mt-4">
+  <form method="POST" action="/email/verification-notification">
+    <button type="submit"
+            class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
+      Resend Verification Email
+    </button>
+  </form>
+
+  <form method="POST" action="/logout">
+    <button type="submit"
+            class="underline text-sm text-gray-600 hover:text-gray-900">
+      Log Out
+    </button>
+  </form>
+</div>

@@ -1,0 +1,50 @@
+<link rel="stylesheet" href="/css/register.css">
+<% if (status) { %>
+  <div class="mb-4 text-green-600"><%= status %></div>
+<% } %>
+<div class="form-container">
+  <h1 class="form-title">Connexion</h1>
+<form method="POST" action="/auth/login" class="form">
+  <!-- Token CSRF -->
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+
+  <!-- Email -->
+  <div class="form-group">
+    <label for="email" class="block text-sm">Email</label>
+    <input id="email" type="email" name="email" value="<%= old?.email || '' %>" required
+           class="block mt-1 w-full rounded border-gray-300 dark:bg-gray-800 dark:border-gray-600" />
+    <% if (errors && errors.email) { %>
+      <p class="mt-2 text-sm text-red-600"><%= errors.email %></p>
+    <% } %>
+  </div>
+
+  <!-- Password -->
+  <div class="form-group">
+    <label for="password" class="block text-sm">Password</label>
+    <input id="password" type="password" name="password" required
+           class="block mt-1 w-full rounded border-gray-300 dark:bg-gray-800 dark:border-gray-600" />
+    <% if (errors && errors.password) { %>
+      <p class="mt-2 text-sm text-red-600"><%= errors.password %></p>
+    <% } %>
+  </div>
+
+  <!-- Remember Me -->
+  <div >
+    <label for="remember_me" class="inline-flex items-center">
+      <input id="remember_me" type="checkbox" name="remember"
+             class="rounded border-gray-300 dark:bg-gray-900 dark:border-gray-600" />
+      <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">Remember me</span>
+    </label>
+  </div>
+
+  <div class="form-actions">
+    <a href="/password/forgot" class="text-sm text-indigo-600 hover:underline">
+      Forgot your password?
+    </a>
+    <button type="submit"
+            class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
+      Log in
+    </button>
+  </div>
+</form>
+</div>

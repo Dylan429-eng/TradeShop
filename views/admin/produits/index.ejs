@@ -1,0 +1,100 @@
+
+<link rel="stylesheet" href="/css/produits/index.css">
+
+<div class="min-h-screen">
+    <div class="max-w-7xl mx-auto px-4">
+        <!-- Header -->
+        <div class="header-flex">
+            <div>
+                <h1 class="header-title">Gestion des Produits</h1>
+                <p class="header-desc">Gérez votre catalogue de produits</p>
+            </div>
+            <a href="/admin/produits/create" class="btn-add">➕ Ajouter un produit</a>
+        </div>
+
+        <% if (success) { %><div class="success-msg"><%= success %></div><% } %>
+
+        <!-- Filtres -->
+        <form method="GET" class="filters" style="gap: 1rem;">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <div style="flex:1; min-width: 200px;">
+                <label>Rechercher</label>
+                <input type="text" name="search" value="<%= search %>" placeholder="Nom du produit...">
+            </div>
+            <div style="min-width: 160px;">
+                <label>Catégorie</label>
+                <select name="categorie">
+                    <option value="">Toutes les catégories</option>
+                    <% categories.forEach(cat => { %>
+                        <option value="<%= cat.id %>" <%= categorie == cat.id ? 'selected' : '' %>><%= cat.type %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div><button type="submit">Filtrer</button></div>
+        </form>
+
+        <!-- Ajout catégorie -->
+        <div class="form-container" style="margin-bottom:2rem;">
+            <form method="POST" action="/admin/categories/store" style="display:flex;gap:1rem;align-items:center;">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <input type="text" name="type" placeholder="Nouvelle catégorie..." required class="form-input" style="max-width:250px;">
+                <button type="submit" class="btn-add">➕ Ajouter</button>
+            </form>
+            <% if (cat_success) { %><div class="success-msg" style="margin-top:1rem;"><%= cat_success %></div><% } %>
+            <% if (errors && errors.type) { %><div class="form-error"><%= errors.type %></div><% } %>
+        </div>
+
+        <!-- Liste des produits -->
+        <div class="table-container">
+            <div style="overflow-x:auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Image</th><th>Produit</th><th>Catégorie</th><th>Prix</th>
+                            <th>Stock</th><th>Créé par</th><th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (produits && produits.length > 0) { %>
+                            <% produits.forEach(produit => { %>
+                                <tr>
+                                    <td>
+                                        <% if (produit.image) { %>
+                                            <img src="/uploads/<%= produit.image %>" alt="<%= produit.nom %>" class="img-thumb">
+                                        <% } else { %>
+                                            <div class="img-thumb">📦</div>
+                                        <% } %>
+                                    </td>
+                                    <td>
+                                        <div style="font-weight:500;color:#22223b;"><%= produit.nom %></div>
+                                        <div style="color:#4a5568;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= produit.description %></div>
+                                    </td>
+                                    <td><span class="badge"><%= produit.categorie.type %></span></td>
+                                    <td><%= parseFloat(produit.prix).toFixed(2) %> FCFA</td>
+                                    <td>
+                                        <span class="badge <%= produit.stock > 10 ? 'badge-green' : produit.stock > 0 ? 'badge-yellow' : 'badge-red' %>">
+                                            <%= produit.stock %> en stock
+                                        </span>
+                                    </td>
+                                    <td><%= produit.user.name %></td>
+                                    <td>
+                                        <div style="display:flex;gap:8px;">
+                                            <a href="/admin/produits/<%= produit.id %>/edit" class="action-btn">✏</a>
+                                            <form method="POST" action="/admin/produits/<%= produit.id %>?_method=DELETE" onsubmit="return confirm('Supprimer ce produit ?')" style="display:inline;">
+                                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                                <button type="submit" class="action-btn delete">🗑</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        <% } else { %>
+                            <tr><td colspan="7" class="empty-state">Aucun produit trouvé</td></tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+            <% if (pagination) { %><div class="pagination"><%- pagination %></div><% } %>
+        </div>
+    </div>
+</div>

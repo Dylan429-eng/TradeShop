@@ -1,0 +1,72 @@
+<link rel="stylesheet" href="/css/produits/create.css">
+
+<div class="min-h-screen">
+  <div class="max-w-4xl">
+    <!-- Header -->
+    <div class="header-flex">
+      <h1 class="header-title">Ajouter un Produit</h1>
+      <a href="/admin/produits" class="btn-back">⬅ Retour</a>
+    </div>
+
+    <!-- Formulaire -->
+    <div class="form-container">
+      <form method="POST" action="/admin/produitStore" enctype="multipart/form-data">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+        <!-- Nom -->
+        <label class="form-label">Nom du Produit <span style="color:#dc2626;">*</span></label>
+        <input class="form-input" type="text" name="nom" value="<%= old && old.nom ? old.nom : '' %>" required>
+        <% if (errors && errors.nom) { %>
+          <p class="form-error"><%= errors.nom %></p>
+        <% } %>
+
+        <!-- Description -->
+        <label class="form-label">Description <span style="color:#dc2626;">*</span></label>
+        <textarea class="form-textarea" name="description" rows="4" required><%= old && old.description ? old.description : '' %></textarea>
+        <% if (errors && errors.description) { %>
+          <p class="form-error"><%= errors.description %></p>
+        <% } %>
+
+        <!-- Prix & Stock -->
+        <div class="grid-2">
+          <div>
+            <label class="form-label">Prix (FCFA) <span style="color:#dc2626;">*</span></label>
+            <input class="form-input" type="number" name="prix" value="<%= old && old.prix ? old.prix : '' %>" step="0.01" min="0" required>
+            <% if (errors && errors.prix) { %>
+              <p class="form-error"><%= errors.prix %></p>
+            <% } %>
+          </div>
+          <div>
+            <label class="form-label">Stock <span style="color:#dc2626;">*</span></label>
+            <input class="form-input" type="number" name="stock" value="<%= old && old.stock ? old.stock : '' %>" min="0" required>
+            <% if (errors && errors.stock) { %>
+              <p class="form-error"><%= errors.stock %></p>
+            <% } %>
+          </div>
+        </div>
+
+        <!-- Catégorie -->
+        <label class="form-label">Catégorie <span style="color:#dc2626;">*</span></label>
+        <select class="form-select" name="categorie_id" required>
+          <option value="">Sélectionnez une catégorie</option>
+          <% categories.forEach(cat => { %>
+            <option value="<%= cat.id %>" <%= old && old.categorie_id == cat.id ? 'selected' : '' %>><%= cat.type %></option>
+          <% }) %>
+        </select>
+        <% if (errors && errors.categorie_id) { %>
+          <p class="form-error"><%= errors.categorie_id %></p>
+        <% } %>
+
+        <!-- Image -->
+        <label class="form-label">Image</label>
+        <input class="form-input" type="file" name="image" accept="image/*">
+
+        <!-- Actions -->
+        <div class="action-btns">
+          <a href="/admin/produits" class="btn-cancel">Annuler</a>
+          <button type="submit" class="btn-submit">Créer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

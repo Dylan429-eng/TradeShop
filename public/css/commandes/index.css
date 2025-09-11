@@ -3,6 +3,7 @@
     min-height: 100vh;
     background: #f8fafc;
     padding: 2rem 0;
+    width: 100%;
     font-family: 'Segoe UI', Arial, sans-serif;
 }
 .header-flex {
@@ -93,6 +94,8 @@
     box-shadow: 0 1px 4px rgba(0,0,0,0.04);
     border: 1px solid #e5e7eb;
     overflow-x: auto;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
 }
 table {
     width: 100%;
@@ -205,5 +208,41 @@ tr:hover {
     }
     .header-title {
         font-size: 2.5rem;
+    }
+}
+
+
+/* Mode compact sur tablettes */
+@media (max-width: 768px) {
+    th, td {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+        white-space: nowrap; /* évite que ça saute sur 2 lignes */
+    }
+}
+
+
+
+/* Réduction sur tablettes */
+@media (max-width: 1024px) {
+    th, td {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Réduction supplémentaire sur mobile */
+@media (max-width: 640px) {
+    th, td {
+        padding: 0.4rem;
+        font-size: 0.75rem;
+        white-space: nowrap;       /* empêche le retour à la ligne */
+        text-overflow: ellipsis;   /* ... si le texte est trop long */
+        overflow: hidden;
+        max-width: 120px;          /* largeur max par cellule */
+    }
+
+    table {
+        font-size: 0.8rem;
     }
 }

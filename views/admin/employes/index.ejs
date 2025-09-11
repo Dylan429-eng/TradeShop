@@ -1,0 +1,50 @@
+
+<link rel="stylesheet" href="/css/commandes/index.css">
+
+<div class="min-h-screen">
+    <div class="max-w-5xl mx-auto px-4">
+        <h1 class="header-title">Liste des Employés</h1>
+         <% if (success) { %><div class="success-msg"><%= success %></div><% } %>
+        <% if (error) { %><div class="form-error"><%= error %></div><% } %>
+        <table class="table-container">
+            <thead>
+                <tr>
+                    <th>#</th><th>Nom</th><th>Email</th><th>Rôle</th>
+                    <th>Date d’inscription</th><th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (users && users.length > 0) { %>
+                    <% users.forEach(user => { %>
+                        <tr>
+                            <td><%= user.id %></td>
+                            <td><%= user.name %></td>
+                            <td><%= user.email %></td>
+                            <td><span class="badge"><%= user.role || 'Non défini' %></span></td>
+                            <td>
+  <%= user.createdAt 
+        ? new Date(user.createdAt).toLocaleDateString("fr-FR", { 
+            year: "numeric", 
+            month: "long", 
+            day: "numeric" 
+          }) 
+        : "" 
+  %>
+</td>
+                            <td>
+                                <form method="POST" action="/admin/users/<%= user.id %>/delete?_method=DELETE" onsubmit="return confirm('Supprimer cet employé ?')" style="display:inline;">
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                    <button type="submit" class="action-btn delete">🗑</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr><td colspan="6" class="empty-state">Aucun employé trouvé.</td></tr>
+                <% } %>
+            </tbody>
+        </table>
+
+        <div class="pagination"><%- pagination %></div>
+    </div>
+</div>

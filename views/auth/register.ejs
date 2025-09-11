@@ -1,0 +1,62 @@
+<link rel="stylesheet" href="/css/register.css">
+<div class="form-container">
+  <h1 class="form-title">Inscription</h1>
+
+  <form method="POST" action="/auth/register" class="form">
+    <!-- CSRF token -->
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+    <!-- Name -->
+    <div class="form-group">
+      <label for="name">Nom</label>
+      <input id="name" type="text" name="name" value="<%= old && old.name ? old.name : '' %>" required />
+      <% if (errors && errors.name) { %>
+        <p class="error"><%= errors.name %></p>
+      <% } %>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" type="email" name="email" value="<%= old && old.email ? old.email : '' %>" required />
+      <% if (errors && errors.email) { %>
+        <p class="error"><%= errors.email %></p>
+      <% } %>
+    </div>
+
+    <!-- Password -->
+    <div class="form-group">
+      <label for="password">Mot de passe</label>
+      <input id="password" type="password" name="password" required />
+    </div>
+
+    <!-- Confirm Password -->
+    <div class="form-group">
+      <label for="password_confirmation">Confirmer le mot de passe</label>
+      <input id="password_confirmation" type="password" name="password_confirmation" required />
+    </div>
+
+    <!-- Role -->
+    <div class="form-group">
+      <label for="role">Rôle</label>
+      <select id="role" name="role" required>
+        <option value="">Sélectionner un rôle</option>
+        <option value="admin" <%= old && old.role === 'admin' ? 'selected' : '' %>>Admin</option>
+        <option value="service_client" <%= old && old.role === 'service_client' ? 'selected' : '' %>>Support/Assistance</option>
+        <option value="livreur" <%= old && old.role === 'livreur' ? 'selected' : '' %>>Livreur</option>
+      </select>
+    </div>
+
+    <!-- Telephone -->
+    <div class="form-group">
+      <label for="telephone">Téléphone</label>
+      <input id="telephone" type="number" name="telephone" value="<%= old && old.telephone ? old.telephone : '' %>" required />
+    </div>
+
+    <!-- Actions -->
+    <div class="form-actions">
+      <a href="/auth/login">Déjà inscrit ?</a>
+      <button type="submit">S'inscrire</button>
+    </div>
+  </form>
+</div>

@@ -1,30 +1,41 @@
-
+/* === Base === */
 .min-h-screen {
     min-height: 100vh;
     background: #f8fafc;
     padding: 2rem 0;
     font-family: 'Segoe UI', Arial, sans-serif;
 }
+
 .max-w-4xl {
     max-width: 900px;
     margin: 0 auto;
     padding: 0 1rem;
 }
+
+.max-w-4xl * {
+    box-sizing: border-box; /* empêche le débordement */
+}
+
+/* === Header === */
 .header-flex {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
+    flex-wrap: wrap;
 }
+
 .header-title {
     font-size: 2rem;
     font-weight: bold;
     color: #22223b;
 }
+
 .header-desc {
     margin-top: 0.5rem;
     color: #4a5568;
 }
+
 .btn-back {
     background: #374151;
     color: #fff;
@@ -37,16 +48,23 @@
     transition: background 0.2s;
     border: none;
 }
+
 .btn-back:hover {
     background: #111827;
 }
+
+/* === Formulaire === */
 .form-container {
     background: #fff;
     border-radius: 0.5rem;
     box-shadow: 0 1px 4px rgba(0,0,0,0.04);
     border: 1px solid #e5e7eb;
     padding: 2rem;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto; /* empêche débordement horizontal */
 }
+
 .form-label {
     font-size: 1rem;
     font-weight: 500;
@@ -54,7 +72,10 @@
     margin-bottom: 0.5rem;
     display: block;
 }
-.form-input, .form-select, .form-textarea {
+
+.form-input,
+.form-select,
+.form-textarea {
     width: 100%;
     padding: 0.75rem;
     border: 1px solid #cbd5e1;
@@ -63,41 +84,48 @@
     margin-bottom: 0.5rem;
     background: #f9fafb;
     transition: border 0.2s;
+    box-sizing: border-box;
 }
-.form-input:focus, .form-select:focus, .form-textarea:focus {
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
     border-color: #2563eb;
     outline: none;
 }
+
 .form-error {
     margin-top: 0.25rem;
     font-size: 0.95rem;
     color: #dc2626;
 }
+
+/* === Grille 2 colonnes === */
 .grid-2 {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 2rem;
 }
-@media (max-width: 768px) {
-    .grid-2 {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-}
+
+/* === Image upload === */
 .image-upload-box {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2rem 1rem;
+    padding: 1rem;
     border: 2px dashed #cbd5e1;
     border-radius: 0.5rem;
     background: #f9fafb;
     transition: border-color 0.2s;
     margin-bottom: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
 }
+
 .image-upload-box:hover {
     border-color: #2563eb;
 }
+
 .image-upload-label {
     cursor: pointer;
     background: #fff;
@@ -108,19 +136,23 @@
     transition: color 0.2s;
     border: none;
 }
+
 .image-upload-label:hover {
     color: #1d4ed8;
 }
+
 .image-upload-desc {
     font-size: 0.95rem;
     color: #6b7280;
     margin-left: 0.5rem;
 }
+
 .image-upload-info {
     font-size: 0.85rem;
     color: #6b7280;
     margin-top: 0.5rem;
 }
+
 .image-preview {
     margin-top: 1rem;
     width: 128px;
@@ -129,7 +161,11 @@
     border-radius: 0.5rem;
     border: 1px solid #cbd5e1;
     display: block;
+    max-width: 100%;
+    height: auto;
 }
+
+/* === Boutons === */
 .action-btns {
     display: flex;
     justify-content: flex-end;
@@ -138,6 +174,7 @@
     border-top: 1px solid #e5e7eb;
     margin-top: 2rem;
 }
+
 .btn-cancel {
     background: #fff;
     color: #374151;
@@ -148,10 +185,12 @@
     text-decoration: none;
     transition: background 0.2s, color 0.2s;
 }
+
 .btn-cancel:hover {
     background: #f3f4f6;
     color: #22223b;
 }
+
 .btn-submit {
     background: #2563eb;
     color: #fff;
@@ -163,11 +202,12 @@
     border: none;
     transition: background 0.2s;
 }
+
 .btn-submit:hover {
     background: #1d4ed8;
 }
 
-/* Mobile (≤ 640px) */
+/* === Responsive Mobile (≤ 640px) === */
 @media (max-width: 640px) {
     .header-title {
         font-size: 1.5rem;
@@ -184,15 +224,19 @@
     }
 }
 
-/* Tablette (641px – 1024px) */
+/* === Tablette (641px – 1024px) === */
 @media (max-width: 1024px) {
     .header-flex {
         flex-direction: column;
         align-items: flex-start;
     }
+    .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
 }
 
-/* Grand écran (≥ 1440px) */
+/* === Grand écran (≥ 1440px) === */
 @media (min-width: 1440px) {
     .max-w-4xl {
         max-width: 1100px;

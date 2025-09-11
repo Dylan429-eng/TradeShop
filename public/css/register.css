@@ -1,0 +1,129 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f3f4f6;
+  margin: 0;
+  padding: 1rem; /* évite que le contenu colle aux bords */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* aligné en haut, pas au milieu */
+  min-height: 100vh; /* prend toute la hauteur disponible */
+  overflow-y: auto; /* permet le scroll si le formulaire est trop long */
+}
+
+.form-container {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 420px;
+  margin-top: 2rem;   /* espace au-dessus */
+  margin-bottom: 2rem; /* espace en bas */
+}
+
+h1 {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #111827;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  display: block;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+  outline: none;
+}
+
+.error {
+  margin-top: 0.3rem;
+  font-size: 0.85rem;
+  color: #dc2626;
+}
+
+.form-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* permet de passer en colonne sur petits écrans */
+  gap: 1rem;
+}
+
+.form-actions a {
+  font-size: 0.9rem;
+  color: #6366f1;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.form-actions a:hover {
+  color: #4338ca;
+  text-decoration: underline;
+}
+
+.form-actions button {
+  background: #6366f1;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.form-actions button:hover {
+  background: #4338ca;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 600px) {
+  .form-container {
+    padding: 1.5rem;
+    max-width: 100%;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .form-actions {
+    flex-direction: column; /* lien et bouton passent l’un en dessous de l’autre */
+    align-items: stretch;
+  }
+
+  .form-actions a {
+    text-align: center;
+  }
+
+  .form-actions button {
+    width: 100%; /* bouton plein largeur */
+  }
+}

@@ -1,0 +1,75 @@
+
+<link rel="stylesheet" href="/css/statistiques/index.css">
+
+<div class="min-h-screen">
+    <div class="max-w-5xl mx-auto px-4">
+        <h1 class="header-title">Statistiques des Produits</h1>
+
+        <form method="GET" class="filters" style="margin-bottom:2rem;">
+            <label>Période :</label>
+            <select name="periode" onchange="this.form.submit()" class="form-select" style="max-width:220px;">
+                <option value="mois_actuel" <%= periode === 'mois_actuel' ? 'selected' : '' %>>Ce mois-ci</option>
+                <option value="mois_precedent" <%= periode === 'mois_precedent' ? 'selected' : '' %>>Le mois dernier</option>
+                <option value="deux_derniers_mois" <%= periode === 'deux_derniers_mois' ? 'selected' : '' %>>Les deux derniers mois</option>
+                <option value="semaine_actuelle" <%= periode === 'semaine_actuelle' ? 'selected' : '' %>>Cette semaine</option>
+                <option value="semaine_precedente" <%= periode === 'semaine_precedente' ? 'selected' : '' %>>La semaine dernière</option>
+                <option value="deux_derniere_semaines" <%= periode === 'deux_derniere_semaines' ? 'selected' : '' %>>Les deux dernières semaines</option>
+            </select>
+        </form>
+
+        <div class="grid-2" style="gap:2rem;">
+            <div>
+                <h2>Top 5 produits les plus vendus</h2>
+                <ul>
+                    <% plusVendus.forEach(prod => { %>
+                        <li><%= prod.nom %> : <b><%= prod.ventes %></b> ventes</li>
+                    <% }) %>
+                </ul>
+            </div>
+            <div>
+                <h2>Top 5 produits les moins vendus</h2>
+                <ul>
+                    <% moinsVendus.forEach(prod => { %>
+                        <li><%= prod.nom %> : <b><%= prod.ventes %></b> ventes</li>
+                    <% }) %>
+                </ul>
+            </div>
+        </div>
+
+        <div style="margin-top:3rem;">
+            <h2>Graphique des ventes</h2>
+            <canvas id="produitsChart" height="120"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('produitsChart').getContext('2d');
+
+    // On passe les données brutes de Node à JS via JSON
+    const produitsStats = JSON.parse('<%- JSON.stringify(produitsStats || []) %>');
+
+    const produitsLabels = produitsStats.map(p => p.nom);
+    const produitsVentes = produitsStats.map(p => Number(p.ventes) || 0);
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: produitsLabels,
+            datasets: [{
+                label: 'Ventes',
+                data: produitsVentes,
+                backgroundColor: '#2563eb'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { title: { display: true, text: 'Produit' } },
+                y: { title: { display: true, text: 'Nombre de ventes' }, beginAtZero: true }
+            }
+        }
+    });
+</script>

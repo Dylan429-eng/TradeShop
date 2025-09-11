@@ -1,0 +1,102 @@
+
+<link rel="stylesheet" href="/css/commandes/index.css">
+
+<div class="min-h-screen">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="header-flex" style="margin-bottom:2rem;">
+            <div>
+                <h1 class="header-title">Gestion des Commandes</h1>
+                <p class="header-desc">Visualisez, assignez et gérez les commandes passées</p>
+            </div>
+            <div>
+                <button onclick="document.getElementById('retrait-modal').style.display='block'" class="btn-add">
+                    Retrait MOMO/OM
+                </button>
+            </div>
+        </div>
+
+        <!-- Modal retrait -->
+        <div id="retrait-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.3); z-index:1000;">
+            <div style="background:#fff; max-width:400px; margin:10vh auto; padding:2rem; border-radius:8px;">
+                <form method="POST" action="/admin/commandes/retrait">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <h2 class="text-lg font-bold mb-4">Retrait TradeShop</h2>
+                    <div class="alert-warning" style="background:#fffbe6; color:#b45309; border:1px solid #fde68a; padding:8px 12px; border-radius:4px; margin-bottom:1rem; font-size:0.95em;">
+                    <strong>Attention :</strong> Des frais de <b>5%</b> seront automatiquement déduits du montant saisi lors de la transaction.
+                    </div>
+                    <label>Numéro de téléphone (MOMO/OM):</label>
+            <input type="text" name="phone_number" class="form-input mb-2" placeholder="+2376XXXXXXXX"required><br>
+            <label>Montant à retirer (FCFA):</label>
+            <input type="number" name="amount" class="form-input mb-4"  required>
+            <div class="flex justify-end space-x-2">
+                <button type="button" onclick="document.getElementById('retrait-modal').style.display='none'" class="btn-cancel">Annuler </button>
+                <button type="submit" class="btn-add">Valider le retrait</button>
+            </div>
+            </form>
+            </div>
+        </div>
+
+        <% if (success) { %><div class="success-msg"><%= success %></div><% } %>
+        <% if (error) { %><div class="form-error"><%= error %></div><% } %>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th><th>Client</th><th>Produits</th><th>Montant</th>
+                        <th>Date</th><th>Livreur</th><th>Statut</th><th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+  <% if (commandes && commandes.length > 0) { %>
+    <% commandes.forEach(commande => { %>
+      <tr>
+        <td><%= commande.id %></td>
+        <td><%= commande.client?.name || 'Inconnu' %></td>
+        <td>
+          <% if (commande.details && commande.details.length > 0) { %>
+            <% commande.details.forEach(detail => { %>
+              <span class="badge"><%= detail.produit?.nom || 'Produit inconnu' %></span>
+            <% }) %>
+          <% } else { %>
+            <span>Aucun produit</span>
+          <% } %>
+        </td>
+        <td><%= commande.total_prix?.toLocaleString() || 0 %> FCFA</td>
+        <td><%= commande.created_at_formatted || commande.createdAt.toLocaleDateString() %></td>
+       <td>
+  <% if (commande.livraison && commande.livraison.livreur) { %>
+    <span class="badge badge-green"><%= commande.livraison.livreur.name %></span>
+  <% } else { %>
+    <form method="POST" action="/admin/commandes/<%= commande.id %>/assigner">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <select name="livreur_id" class="form-select" required>
+        <option value="">Choisir un livreur</option>
+        <% livreurs.forEach(livreur => { %>
+          <option value="<%= livreur.id %>"><%= livreur.name %></option>
+        <% }) %>
+      </select>
+      <button type="submit" class="btn-add">Assigner</button>
+    </form>
+  <% } %>
+</td>
+
+        <td>
+          <span class="badge <%= commande.statut === 'livré' ? 'badge-green' : commande.statut === 'en attente' ? 'badge-yellow' : 'badge-red' %>">
+            <%= commande.statut %>
+          </span>
+        </td>
+        <td>
+          <a href="/admin/commandes/<%= commande.id %>" class="action-btn">👁</a>
+        </td>
+      </tr>
+    <% }) %>
+  <% } else { %>
+    <tr><td colspan="8" class="empty-state">Aucune commande trouvée</td></tr>
+  <% } %>
+</tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
