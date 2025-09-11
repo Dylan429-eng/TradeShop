@@ -28,6 +28,7 @@ app.use(
           rejectUnauthorized: false, // << clé pour Render + Supabase
         },
       },
+      tableName: 'sessions',
     }),
     secret: process.env.SESSION_SECRET,
     resave: false,
