@@ -29,6 +29,7 @@ app.use(
         },
       },
       tableName: 'sessions',
+      schemaName: 'public',
     }),
     secret: process.env.SESSION_SECRET,
     resave: false,
