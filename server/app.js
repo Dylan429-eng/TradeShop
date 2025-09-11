@@ -6,6 +6,7 @@ const path = require('path');
 const csurf = require('csurf');
 const expressLayouts = require('express-ejs-layouts');
 const methodOverride = require('method-override');
+const pgSession = require('connect-pg-simple')(session);
 require('dotenv').config();
 
 const app = express();
@@ -19,10 +20,12 @@ app.use(methodOverride('_method'));
 // --- Session obligatoire pour CSRF ---
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || 'secretKey',
+    store: new pgSession({
+      conString: `postgres://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DB_NAME}?sslmode=require`,
+    }),
+    secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true, // important pour CSRF
-    cookie: { secure: false, httpOnly: true }, // mettre secure: true si HTTPS
+    saveUninitialized: false,
   })
 );
 app.use(flash());
