@@ -15,7 +15,9 @@ const {
 } = require("../../models");
 const axios = require("axios");
 const { v4: uuidv4 } = require("uuid");
-
+const path = require('path');
+const fs = require('fs');
+const supabase = require("../../utils/supabaseClient");
 // Dashboard principal admin
 exports.dashboard = async (req, res) => {
   try {
@@ -186,33 +188,40 @@ exports.storeProduit = async (req, res) => {
       return res.status(401).send("Utilisateur non authentifié");
     }
 
+    let imageUrl = null;
+
     if (req.file) {
-      data.image =  req.file.filename;
+      const fileName = Date.now() + "-" + req.file.originalname.replace(/\s+/g, "_");
+
+      // 🔹 upload du buffer vers Supabase
+      const { error } = await supabase.storage
+        .from(process.env.SUPABASE_BUCKET)
+        .upload(fileName, req.file.buffer, {
+          contentType: req.file.mimetype,
+        });
+
+      if (error) throw error;
+
+      const { data: publicUrlData } = supabase.storage
+        .from(process.env.SUPABASE_BUCKET)
+        .getPublicUrl(fileName);
+
+      imageUrl = publicUrlData.publicUrl;
     }
 
-    const existing = await Produit.findOne({
-      where: {
-        nom: data.nom,
-        description: data.description,
-        prix: data.prix,
-        categorie_id: data.categorie_id,
-        user_id: userId
-      }
+    await Produit.create({
+      ...data,
+      image: imageUrl,
+      user_id: userId,
     });
 
-    if (existing) {
-      await existing.increment("stock", { by: parseInt(data.stock, 10) });
-      return res.redirect("/admin/produits?success=Stock mis à jour");
-    }
-
-    data.user_id = userId;
-    await Produit.create(data);
     res.redirect("/admin/produits?success=Produit ajouté");
   } catch (err) {
-    console.error(err);
+    console.error("Erreur storeProduit:", err);
     res.status(400).send("Erreur ajout produit");
   }
 };
+
 
 exports.editProduit = async (req, res) => {
   const produit = await Produit.findByPk(req.params.id);
